@@ -38,11 +38,6 @@ class Order:
         print()
 
 
-class OrderElement:
-
-    def __init__(self):
-
-
 class Apple:
 
     def __init__(self, species_name, size, price):
