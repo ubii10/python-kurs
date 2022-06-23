@@ -3,63 +3,100 @@ import random
 
 class Product:
 
-    def __init__(self, name, category, price):
+    def __init__(self, name, category_name, unit_price):
         self.name = name
-        self.category = category
-        self.price = price
+        self.category_name = category_name
+        self.unit_price = unit_price
+
+    def print_product(self):
+        print(f"Nazwa: {self.name} | Kategoria: {self.category_name} | Cena: {self.unit_price}/szt")
 
 
 class Order:
 
-    def __init__(self, first_name, last_name, products=None):
-        self.first_name = first_name
-        self.last_name = last_name
-
+    def __init__(self, client_first_name, client_last_name, products=None):
+        self.client_first_name = client_first_name
+        self.client_last_name = client_last_name
         if products is None:
             products = []
         self.products = products
 
         total_price = 0
         for product in products:
-            if type(product) != str:
-                total_price += product.price
-
+            total_price += product.unit_price
         self.total_price = total_price
+
+    def print_order(self):
+        print("=" * 20)
+        print(f"Zamówienie złożone przez: {self.client_first_name} {self.client_last_name}")
+        print(f"O łącznej wartości: {self.total_price} PLN")
+        print("Zamówione produkty:")
+        for product in self.products:
+            print("\t", end="")
+            product.print_product(product)
+        print("=" * 20)
+        print()
+
+
+class OrderElement:
+
+    def __init__(self):
 
 
 class Apple:
 
-    def __init__(self, species, size, price):
-        self.species = species
+    def __init__(self, species_name, size, price):
+        self.species_name = species_name
         self.size = size
         self.price = price
+
+    def count_total(self, weight):
+        return weight * self.price
 
 
 class Potato:
-
-    def __init__(self, species, size, price):
-        self.species = species
+    def __init__(self, species_name, size, price):
+        self.species_name = species_name
         self.size = size
         self.price = price
 
 
-def generate_order(first_name, last_name):
+# def print_product(product):
+#     print(f"Nazwa: {product.name} | Kategoria: {product.category_name} | Cena: {product.unit_price}/szt")
+
+
+# def print_order(order):
+#     print("=" * 20)
+#     print(f"Zamówienie złożone przez: {order.client_first_name} {order.client_last_name}")
+#     print(f"O łącznej wartości: {order.total_price} PLN")
+#     print("Zamówione produkty:")
+#     for product in order.products:
+#         print("\t", end="")
+#         print_product(product)
+#     print("=" * 20)
+#     print()
+
+
+def generate_order():
+    number_of_product = random.randint(1, 10)
     products = []
-    for i in range(random.randint(1, 15)):
-        products.append(f"Produkt-{i}")
+    for product_number in range(number_of_product):
+        product_name = f"Produkt-{product_number}"
+        category_name = "Inne"
+        unit_price = random.randint(1, 30)
+        product = Product(product_name, category_name, unit_price)
+        products.append(product)
 
-    random_order = Order(first_name, last_name, products)
-    return random_order
+    order = Order(client_first_name="Mikołaj", client_last_name="Lewandowski", products=products)
+    return order
 
 
-if __name__ == "__main__":
-    order = generate_order("Kuba", "Olech")
-    print(order.first_name, order.last_name, order.products, order.total_price)
-    # bread = Product("Bread", "Baked goods", 5)
-    # lollipop = Product("Lollipop", "Sweets", 3)
-    #
-    # first_order = Order("Jakub", "Olech")
-    # second_order = Order("Marek", "Kowalski", [bread, lollipop])
-    #
-    # print(first_order.first_name, first_order.last_name, first_order.products)
-    # print(second_order.first_name, second_order.last_name, second_order.products, second_order.total_price)
+def run_homework():
+    first_order = generate_order()
+    first_order.print_order()
+    second_order = generate_order()
+    second_order.print_order()
+
+
+if __name__ == '__main__':
+    run_homework()
