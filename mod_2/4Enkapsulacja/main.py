@@ -1,6 +1,7 @@
 from shop.order import generate_order
 from shop.product import Product
 
+
 def run_homework():
     first_order = generate_order()
     print(first_order)
